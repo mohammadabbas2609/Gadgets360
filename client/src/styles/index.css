@@ -2,7 +2,10 @@ main {
   min-height: 80vh;
 }
 
-img {
-  width: 200px;
-  height: 250px;
+h3 {
+  padding: 1rem 0;
+}
+
+.rating span {
+  margin: 0.1rem;
 }

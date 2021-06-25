@@ -1,16 +1,21 @@
 {
-  "name": "blissfulbites",
+  "name": "gadgets360",
   "version": "1.0.0",
-  "description": "Online bakery to shop for sweets",
+  "description": "online shop for gadgets",
+  "type": "module",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server"
+    "dev": "nodemon server/server"
   },
   "author": "Mohammad Abbas",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.12.14"
+  },
+  "devDependencies": {
+    "colors": "^1.4.0"
   }
 }
