@@ -1,12 +1,27 @@
 import express from "express";
+
 import {
+  updateProduct,
+  createProduct,
+  deleteProduct,
   getProductDetail,
   getProducts,
+  reviewProduct,
 } from "../controllers/productController.js";
-const router = express.Router();
+import { verifyUser } from "../middlewares/protectRoute.js";
+import roles from "../middlewares/roles.js";
 
-router.route("/").get(getProducts);
+const productRouter = express.Router();
 
-router.route("/:id").get(getProductDetail);
+productRouter
+  .route("/")
+  .get(getProducts)
+  .post(verifyUser, roles, createProduct);
+productRouter
+  .route("/:id")
+  .get(getProductDetail)
+  .delete(verifyUser, roles, deleteProduct)
+  .put(verifyUser, roles, updateProduct);
 
-export default router;
+productRouter.route("/:id/review").post(verifyUser, reviewProduct);
+export default productRouter;

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import brcypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -25,9 +25,13 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+UserSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 UserSchema.pre("save", async function (next) {
-  const salt = await brcypt.genSalt();
-  this.password = await brcypt.hash(this.password, salt);
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 

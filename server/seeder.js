@@ -8,6 +8,7 @@ import products from "./_data/products.js";
 import users from "./_data/users.js";
 import ProductModel from "./models/productModel.js";
 import UserModel from "./models/userModel.js";
+import OrderModel from "./models/orderModel.js";
 
 dotenv.config({ path: path.resolve() + "/config/config.env" });
 
@@ -15,6 +16,7 @@ const uploadData = async () => {
   await db();
   await ProductModel.deleteMany();
   await UserModel.deleteMany();
+  await OrderModel.deleteMany();
 
   await UserModel.create(users);
   const admin = await UserModel.findOne({ isAdmin: true });
@@ -29,6 +31,7 @@ const uploadData = async () => {
 const deleteData = async () => {
   await ProductModel.deleteMany();
   await UserModel.deleteMany();
+  await OrderModel.deleteMany();
   console.log("data destroyed".america.bold);
 };
 
