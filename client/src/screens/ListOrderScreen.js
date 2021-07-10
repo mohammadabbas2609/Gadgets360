@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { listOrders } from "../actions/orderAction";
+import Title from "../components/Title";
 
 const OrderListScreen = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,8 @@ const OrderListScreen = () => {
 
   return (
     <>
-      <h1>Users</h1>
+      <Title title="Gadgets360 | Orders List" />
+      <h1>Orders</h1>
       {loading ? (
         <Loader />
       ) : error ? (

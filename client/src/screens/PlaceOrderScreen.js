@@ -5,6 +5,7 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { Link, useHistory } from "react-router-dom";
 import { createOrder } from "../actions/orderAction";
 import { useEffect } from "react";
+import Title from "../components/Title";
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const PlaceOrderScreen = () => {
   };
   return (
     <>
+      <Title title="Gadgets360 | Confirm Order" />
       <CheckoutSteps step1 step2 step3 step4 />
       <Row>
         <Col md={8}>

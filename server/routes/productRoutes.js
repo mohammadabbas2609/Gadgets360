@@ -7,6 +7,7 @@ import {
   getProductDetail,
   getProducts,
   reviewProduct,
+  getTopRatedProd,
 } from "../controllers/productController.js";
 import { verifyUser } from "../middlewares/protectRoute.js";
 import roles from "../middlewares/roles.js";
@@ -17,6 +18,8 @@ productRouter
   .route("/")
   .get(getProducts)
   .post(verifyUser, roles, createProduct);
+
+productRouter.get("/toprated", getTopRatedProd);
 productRouter
   .route("/:id")
   .get(getProductDetail)

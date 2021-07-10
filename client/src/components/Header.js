@@ -3,6 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 import { useHistory } from "react-router-dom";
+import SearchBox from "./SearchBox";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>Gadgets360</Navbar.Brand>
           </LinkContainer>
+          <SearchBox />
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse>
             <Nav className="ml-auto">

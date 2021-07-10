@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Rating from "../components/Rating";
-
+import Title from "../components/Title";
 import { useDispatch, useSelector } from "react-redux";
 import { listProductDetail, createReview } from "../actions/productActions";
 import Loader from "../components/Loader";
@@ -64,6 +64,7 @@ const ProductDetails = () => {
 
   return (
     <>
+      <Title title={product && product.name} />
       <Link className="btn btn-light my-2" to="/">
         Go Back
       </Link>
@@ -100,6 +101,12 @@ const ProductDetails = () => {
                       <Col>
                         <strong>Rs {product.price}</strong>
                       </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Brand</Col>
+                      <Col>{product.brand}</Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>

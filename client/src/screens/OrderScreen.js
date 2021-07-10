@@ -15,6 +15,7 @@ import { getOrderDetails, payOrder, updateOrder } from "../actions/orderAction";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import Title from "../components/Title";
 
 const OrderScreen = () => {
   const dispatch = useDispatch();
@@ -129,6 +130,7 @@ const OrderScreen = () => {
     <Message variant="danger">{error}</Message>
   ) : (
     <>
+      <Title title="Gadgets360 | Order details" />
       <h1>Order {order._id}</h1>
       <Row>
         <Col md={8}>

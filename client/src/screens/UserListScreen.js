@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import { useEffect } from "react";
 import { deleteUser, getUserList } from "../actions/userActions";
 import { useHistory } from "react-router-dom";
+import Title from "../components/Title";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const UserListScreen = () => {
 
   return (
     <>
+      <Title title="Gadgets360 Users" />
       <h1>Users</h1>
       {loading ? (
         <Loader />

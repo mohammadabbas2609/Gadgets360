@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
+import Title from "../components/Title";
 
 const ProductEditScreen = () => {
   const dispatch = useDispatch();
@@ -94,6 +95,7 @@ const ProductEditScreen = () => {
 
   return (
     <>
+      <Title title="Gadgets360 | Edit Products" />
       <Link to="/admin/productlist" className="btn btn-light my-3">
         Go Back
       </Link>
