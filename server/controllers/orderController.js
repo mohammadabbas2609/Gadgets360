@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import Razorpay from "razorpay";
 import path from "path";
 
-dotenv.config({ path: path.resolve() + "/server/config/config.env" });
+dotenv.config();
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_CLIENT_ID,
   key_secret: process.env.RAZORPAY_SECRET,

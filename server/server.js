@@ -11,7 +11,7 @@ import uploadRouter from "./routes/uploadRoutes.js";
 import morgan from "morgan";
 
 const app = express();
-dotenv.config({ path: path.resolve() + "/server/config/config.env" });
+dotenv.config();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
