@@ -10,7 +10,7 @@ import ProductModel from "./models/productModel.js";
 import UserModel from "./models/userModel.js";
 import OrderModel from "./models/orderModel.js";
 
-dotenv.config({ path: path.resolve() + "/config/config.env" });
+dotenv.config();
 
 const uploadData = async () => {
   await db();
