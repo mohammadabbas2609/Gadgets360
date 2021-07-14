@@ -1,8 +1,8 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import OrderModel from "../models/orderModel.js";
+import ProductModel from "../models/productModel.js";
 import dotenv from "dotenv";
 import Razorpay from "razorpay";
-import path from "path";
 
 dotenv.config();
 const razorpay = new Razorpay({
@@ -109,9 +109,17 @@ const updateOrderToPaid = asyncHandler(async (req, res, next) => {
       email_address: req.body.email_address,
     };
 
+    order.orderItems.forEach(async item => {
+      let qty = Number(item.qty);
+      let { countInStock } = await ProductModel.findById(item.product);
+      await ProductModel.findByIdAndUpdate(item.product, {
+        countInStock: countInStock - qty >= 0 ? countInStock - qty : 0,
+      });
+    });
+
     const updatedOrder = await order.save();
 
-    res.json(updatedOrder);
+    return res.json(updatedOrder);
   }
 
   res.status(404);

@@ -14,7 +14,10 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { getOrderDetails, payOrder, updateOrder } from "../actions/orderAction";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import {
+  ORDER_CREATE_RESET,
+  ORDER_PAY_RESET,
+} from "../constants/orderConstants";
 import Title from "../components/Title";
 
 const OrderScreen = () => {
@@ -71,6 +74,7 @@ const OrderScreen = () => {
           };
           setOrderPaid(true);
           dispatch(payOrder(id, paymentResult));
+          dispatch({ type: ORDER_CREATE_RESET });
         }
       },
     };
