@@ -5,14 +5,15 @@ import { useHistory } from "react-router-dom";
 const SearchBox = () => {
   const [keywords, setKeywords] = useState("");
   const history = useHistory();
-  const submitHandler = e => {
-    e.preventDefault();
+
+  const submitHandler = value => {
     if (keywords.trim()) {
       history.push(`/search/${keywords}`);
     } else {
       history.push("/");
     }
   };
+
   return (
     <Form onClick={submitHandler} inline>
       <Form.Control
