@@ -18,9 +18,9 @@ POST http://localhost:5000/api/user/register
 Content-Type: application/json
 
 {
-    "email":"smith@example.com",
+    "email":"mohammadabbas2609@gmail.com",
     "password":"123456",
-    "name":"Smith Doe"
+    "name":"Abbas Shaikh"
 }
 
 ###get user profile
@@ -35,6 +35,14 @@ Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZTNiZGYzNTQ5YzhlM
 
 {
   "password":"123456"
+}
+
+###forgot password
+POST http://localhost:5000/api/user/forgotpassword
+Content-Type: application/json
+
+{
+  "email":"mohammadabbas2609@gmail.com"
 }
 
 ###get my orders

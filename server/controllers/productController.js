@@ -23,6 +23,45 @@ const getProducts = asyncHandler(async (req, res, next) => {
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
+const getFilteredProducts = asyncHandler(async (req, res) => {
+  let { rating, price, brand, category } = req.query;
+  brand === "Select Brand" ? (brand = "") : brand;
+  console.log();
+  category === "Select Category" ? (category = "") : category;
+  let query = {
+    brand: {
+      $regex: brand,
+      $options: "i",
+    },
+    category: {
+      $regex: category,
+      $options: "i",
+    },
+  };
+
+  if (price) {
+    query.price = {
+      $lte: price,
+    };
+  }
+
+  if (rating) {
+    query.rating = {
+      $gte: rating,
+    };
+  }
+
+  console.log(query);
+
+  const products = await ProductModel.find({ ...query });
+  if (!products) {
+    res.status(404);
+    throw new Error("No products Found");
+  }
+
+  res.status(200).json(products);
+});
+
 // @desc - Fetch Single Product with Id
 // @route - GET /api/products/:id
 // @access - Public
@@ -157,4 +196,5 @@ export {
   updateProduct,
   reviewProduct,
   getTopRatedProd,
+  getFilteredProducts,
 };

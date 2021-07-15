@@ -20,6 +20,8 @@ import {
   PRODUCT_TOP_RATED_REQUEST,
   PRODUCT_TOP_RATED_SUCCESS,
   PRODUCT_TOP_RATED_FAIL,
+  PRODUCT_FILTER_REQUEST,
+  PRODUCT_FILTER_SUCCESS,
 } from "../constants/productConstants";
 import axios from "axios";
 
@@ -62,6 +64,33 @@ const topRatedProducts = () => async dispatch => {
     });
   }
 };
+
+const filterProduct =
+  (rating = "", price = "", brand = "", category = "") =>
+  async dispatch => {
+    try {
+      dispatch({
+        type: PRODUCT_FILTER_REQUEST,
+      });
+
+      const { data } = await axios.get(
+        `/api/products/filter?rating=${rating}&price=${price}&brand=${brand}&category=${category}`
+      );
+
+      dispatch({
+        type: PRODUCT_FILTER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_DETAIL_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 const listProductDetail = id => async dispatch => {
   try {
@@ -218,4 +247,5 @@ export {
   updateProduct,
   createReview,
   topRatedProducts,
+  filterProduct,
 };

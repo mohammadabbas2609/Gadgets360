@@ -9,6 +9,7 @@ import Loader from "../components/Loader";
 import { useParams } from "react-router-dom";
 import Slider from "../components/Slider";
 import Title from "../components/Title";
+import Filter from "../components/Filter";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Home = () => {
 
   const productList = useSelector(state => state.productList);
   const { loading, error, products, page, pages } = productList;
+
   useEffect(() => {
     dispatch(listProducts(keywords, pageNumber));
   }, [dispatch, keywords, pageNumber]);
@@ -34,6 +36,7 @@ const Home = () => {
             <Message variant="danger">{error}</Message>
           ) : (
             <>
+              <Filter products={products} />
               <Row>
                 {products.map(product => (
                   <Col key={product._id} sm={12} md={6} lg={6} xl={3}>

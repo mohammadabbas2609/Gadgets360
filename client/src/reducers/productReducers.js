@@ -9,6 +9,9 @@ import {
   PRODUCT_DETAIL_FAIL,
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
+  PRODUCT_FILTER_FAIL,
+  PRODUCT_FILTER_REQUEST,
+  PRODUCT_FILTER_SUCCESS,
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -127,6 +130,19 @@ const productTopRatedReducer = (state = {}, action) => {
   }
 };
 
+const filterProductsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_FILTER_REQUEST:
+      return { loading: true };
+    case PRODUCT_FILTER_SUCCESS:
+      return { loading: false, products: action.payload };
+    case PRODUCT_FILTER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export {
   productListReducer,
   productDetailReducer,
@@ -135,4 +151,5 @@ export {
   productUpdateReducer,
   productReviewReducer,
   productTopRatedReducer,
+  filterProductsReducer,
 };
