@@ -14,6 +14,9 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
   USER_DETAILS_SUCCESS,
+  USER_FORGOT_PASSWORD_FAIL,
+  USER_FORGOT_PASSWORD_REQUEST,
+  USER_FORGOT_PASSWORD_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_RESET,
@@ -25,6 +28,10 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_RESET_PASSWORD_FAIL,
+  USER_RESET_PASSWORD_REQUEST,
+  USER_RESET_PASSWORD_RESET,
+  USER_RESET_PASSWORD_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_RESET,
@@ -70,16 +77,73 @@ const login = (email, password) => async dispatch => {
   }
 };
 
-const logout = () => dispatch => {
-  dispatch({ type: USER_LOGOUT });
-  dispatch({ type: USER_DETAILS_RESET });
-  dispatch({ type: USER_UPDATE_PROFILE_RESET });
-  dispatch({ type: MY_ORDER_RESET });
-  dispatch({ type: USER_LIST_RESET });
-  dispatch({ type: GET_USER_ADMIN_RESET });
-  dispatch({ type: UPDATE_USER_ADMIN_RESET });
-  dispatch({ type: ORDER_UPDATE_RESET });
-  localStorage.removeItem(__GADGETS360_USERINFO);
+const forgotPassword = email => async dispatch => {
+  try {
+    dispatch({
+      type: USER_FORGOT_PASSWORD_REQUEST,
+    });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post(
+      "/api/user/forgotpassword",
+      { email },
+      config
+    );
+
+    dispatch({
+      type: USER_FORGOT_PASSWORD_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_FORGOT_PASSWORD_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+const resetPassword = (resetToken, password) => async dispatch => {
+  try {
+    dispatch({
+      type: USER_RESET_PASSWORD_RESET,
+    });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.put(
+      "/api/user/resetpassword",
+      { resetToken, password },
+      config
+    );
+
+    dispatch({
+      type: USER_RESET_PASSWORD_SUCCESS,
+      payload: data,
+    });
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    localStorage.setItem(__GADGETS360_USERINFO, JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: USER_RESET_PASSWORD_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
 
 const register = (name, email, password) => async dispatch => {
@@ -318,6 +382,19 @@ const deleteUser = id => async (dispatch, getState) => {
   }
 };
 
+const logout = () => dispatch => {
+  dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: USER_UPDATE_PROFILE_RESET });
+  dispatch({ type: MY_ORDER_RESET });
+  dispatch({ type: USER_LIST_RESET });
+  dispatch({ type: GET_USER_ADMIN_RESET });
+  dispatch({ type: UPDATE_USER_ADMIN_RESET });
+  dispatch({ type: ORDER_UPDATE_RESET });
+  dispatch({ type: USER_RESET_PASSWORD_REQUEST });
+  localStorage.removeItem(__GADGETS360_USERINFO);
+};
+
 export {
   login,
   logout,
@@ -328,4 +405,6 @@ export {
   getUserDetailAdmin,
   deleteUser,
   updateUserDetailAdmin,
+  forgotPassword,
+  resetPassword,
 };

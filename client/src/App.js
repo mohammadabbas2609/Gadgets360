@@ -18,6 +18,8 @@ import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/ListOrderScreen";
 import FilteredScreen from "./screens/FilteredScreen";
+import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
+import ResetPasswordScreen from "./screens/ResetPasswordScreen";
 
 function App() {
   return (
@@ -27,6 +29,11 @@ function App() {
         <Container>
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
+          <Route path="/forgotpassword" component={ForgotPasswordScreen} />
+          <Route
+            path="/resetpassword/:resetToken"
+            component={ResetPasswordScreen}
+          />
           <Route path="/profile" component={ProfileScreen} />
           <Route path="/shipping" component={ShippingScreen} />
           <Route path="/payment" component={PaymentScreen} />

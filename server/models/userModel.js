@@ -32,6 +32,19 @@ UserSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+UserSchema.methods.generatePasswordReset = function () {
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  let resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  let resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+
+  return { resetToken, resetPasswordToken, resetPasswordExpire };
+};
+
 UserSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);

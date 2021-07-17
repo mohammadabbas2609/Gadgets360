@@ -1,6 +1,8 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import UserModel from "../models/userModel.js";
 import { createToken } from "../utils/tokenHandler.js";
+import sendMail from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 // @desc - Auth User & get token
 // @route - POST /api/user/login
@@ -54,6 +56,78 @@ const createUser = asyncHandler(async (req, res, next) => {
       throw new Error("Unable to register user");
     }
   }
+});
+
+// @desc - Forgot Password
+// @route - POST /api/user/forgotpassword
+// @access - Public
+const forgotPassword = asyncHandler(async (req, res, next) => {
+  const user = await UserModel.findOne({ email: req.body.email });
+  if (!user) {
+    res.status(404);
+    throw new Error("Email doesnt exist");
+  }
+
+  const { resetToken, resetPasswordToken, resetPasswordExpire } =
+    user.generatePasswordReset();
+
+  await UserModel.findByIdAndUpdate(
+    user._id,
+    {
+      resetPasswordToken,
+      resetPasswordExpire,
+    },
+    { runValidators: true, new: true }
+  ).select("-password");
+
+  sendMail({
+    email: user.email,
+    subject: "Reset Password Request | Gadgets360",
+    message: `If you Requested Password Reset Kindly Follow up the link ${process.env.URL}/resetpassword/${resetToken}`,
+  })
+    .then(() => {
+      res.status(200).send(`Email Sent to ${user.email} Check your Inbox`);
+    })
+    .catch(() => {
+      res.status(500);
+      throw new Error("Coudnt sent email");
+    });
+});
+
+// @desc - Reset Password
+// @route - PUT /api/user/resetpassword/
+// @access - Public
+const resetPassword = asyncHandler(async (req, res) => {
+  // Get Hashed Token
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.body.resetToken)
+    .digest("hex");
+
+  const user = await UserModel.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    res.status(400);
+    throw new Error("Link Expired try again");
+  }
+
+  // Set the new Password
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+
+  const token = createToken(user._id);
+  res.status(200).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token,
+  });
 });
 
 // @desc - User profile
@@ -179,4 +253,6 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  forgotPassword,
+  resetPassword,
 };

@@ -3,9 +3,11 @@ import {
   authUser,
   createUser,
   deleteUser,
+  forgotPassword,
   getAllUsers,
   getUserById,
   getUserProfile,
+  resetPassword,
   updateUser,
   updateUserProfile,
 } from "../controllers/userController.js";
@@ -16,6 +18,8 @@ const userRouter = express.Router();
 
 userRouter.route("/login").post(authUser);
 userRouter.route("/register").post(createUser);
+userRouter.route("/forgotpassword").post(forgotPassword);
+userRouter.route("/resetpassword").post(resetPassword);
 
 // Admin Routes
 userRouter.route("/users").get(verifyUser, roles, getAllUsers);

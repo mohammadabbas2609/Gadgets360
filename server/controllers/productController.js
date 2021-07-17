@@ -25,9 +25,6 @@ const getProducts = asyncHandler(async (req, res, next) => {
 
 const getFilteredProducts = asyncHandler(async (req, res) => {
   let { rating, price, brand, category } = req.query;
-  brand === "Select Brand" ? (brand = "") : brand;
-  console.log();
-  category === "Select Category" ? (category = "") : category;
   let query = {
     brand: {
       $regex: brand,
@@ -51,9 +48,8 @@ const getFilteredProducts = asyncHandler(async (req, res) => {
     };
   }
 
-  console.log(query);
-
   const products = await ProductModel.find({ ...query });
+
   if (!products) {
     res.status(404);
     throw new Error("No products Found");

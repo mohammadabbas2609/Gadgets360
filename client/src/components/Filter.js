@@ -75,7 +75,7 @@ const Filter = ({ products }) => {
                   value={category}
                   onChange={e => setCategory(e.target.value)}
                 >
-                  <option value="Select Category">Select Category</option>
+                  <option value="">Select Category</option>
                   {uniqueArr(categoryArr).map((category, index) => (
                     <option key={index} value={category}>
                       {category}
@@ -90,7 +90,7 @@ const Filter = ({ products }) => {
                   value={brand}
                   onChange={e => setBrand(e.target.value)}
                 >
-                  <option value="Select Brand">Select Brand</option>
+                  <option value="">Select Brand</option>
                   {uniqueArr(brandArr).map((brand, index) => (
                     <option key={index} value={brand}>
                       {brand}
