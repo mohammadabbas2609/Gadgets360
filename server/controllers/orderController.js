@@ -3,6 +3,7 @@ import OrderModel from "../models/orderModel.js";
 import ProductModel from "../models/productModel.js";
 import dotenv from "dotenv";
 import Razorpay from "razorpay";
+import sendMail from "../utils/sendEmail.js";
 
 dotenv.config();
 const razorpay = new Razorpay({
@@ -97,7 +98,10 @@ const validateOrder = asyncHandler(async (req, res, next) => {
 // @route - PUT /api/orders/:id/pay
 // @access - Private
 const updateOrderToPaid = asyncHandler(async (req, res, next) => {
-  const order = await OrderModel.findById(req.params.id);
+  const order = await OrderModel.findById(req.params.id).populate(
+    "user",
+    "email"
+  );
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
@@ -118,6 +122,12 @@ const updateOrderToPaid = asyncHandler(async (req, res, next) => {
     });
 
     const updatedOrder = await order.save();
+
+    sendMail({
+      email: order.user.email,
+      subject: "Ordered Paid | Gadgets360",
+      message: `your Order of ${order._id} successfully paid you can view it at ${process.env.URL}/order/${order._id}`,
+    });
 
     return res.json(updatedOrder);
   }
@@ -140,7 +150,6 @@ const myOrders = asyncHandler(async (req, res) => {
 // @desc - Get logged All Orders
 // @route - GET /api/orders
 //@access - Private/Admin
-
 const allOrders = asyncHandler(async (req, res) => {
   const orders = await OrderModel.find().populate("user", "id name");
   res.status(200).json(orders);
@@ -148,8 +157,7 @@ const allOrders = asyncHandler(async (req, res) => {
 
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  console.log(id);
-  const order = await OrderModel.findById(id);
+  const order = await OrderModel.findById(id).populate("user", "email");
   if (!order) {
     res.json(200);
     throw new Error("Order Not Found");
@@ -162,6 +170,13 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
       },
       { new: true, runValidators: true }
     );
+
+    sendMail({
+      email: order.user.email,
+      subject: "Ordered Delivered | Gadgets360",
+      message: `your Order of ${order._id} delivered you can view it at ${process.env.URL}/order/${order._id}`,
+    });
+
     res.status(200).json(updatedOrder);
   }
 });

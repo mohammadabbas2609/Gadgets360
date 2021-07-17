@@ -19,7 +19,7 @@ const userRouter = express.Router();
 userRouter.route("/login").post(authUser);
 userRouter.route("/register").post(createUser);
 userRouter.route("/forgotpassword").post(forgotPassword);
-userRouter.route("/resetpassword").post(resetPassword);
+userRouter.route("/resetpassword").put(resetPassword);
 
 // Admin Routes
 userRouter.route("/users").get(verifyUser, roles, getAllUsers);

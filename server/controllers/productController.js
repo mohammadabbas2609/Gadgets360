@@ -50,7 +50,7 @@ const getFilteredProducts = asyncHandler(async (req, res) => {
 
   const products = await ProductModel.find({ ...query });
 
-  if (!products) {
+  if (products.length === 0) {
     res.status(404);
     throw new Error("No products Found");
   }
