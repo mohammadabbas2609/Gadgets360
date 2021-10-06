@@ -34,4 +34,6 @@
  ### Create a .env file in root folder then add the following
  ```
  NODE_ENV = development
+ PORT = 5000
+ MONGO_URI = *yours mongodb URL*
  ```
