@@ -36,4 +36,12 @@
  NODE_ENV = development
  PORT = 5000
  MONGO_URI = *yours mongodb URL*
+ JWT_SECRET = *your JWT secret*
+ RAZORPAY_CLIENT_ID = *client id*
+ RAZORPAY_CLIENT_SECRET = *client secret*
+ GOOGLE_CLIENT_ID = *your Google client_id*
+GOOGLE_CLIENT_SECRET = *Google Client secret*
+GOOGLE_REDIRECT_URI = *Redirect URI*
+GOOGLE_REFRESH_TOKEN= *Refresh token*
+URL = *localhost address while on development | live address while on production*
  ```
