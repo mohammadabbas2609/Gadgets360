@@ -21,7 +21,7 @@
   * React-bootstrap (CSS framerwork for styling)
   * Redux (State Management)
   * axios (For making requests to backend)
- * Backend
+* Backend
   * Nodejs (Javascript runtime)
   * Expressjs (Nodejs framework)
   * MongoDB (Database)
