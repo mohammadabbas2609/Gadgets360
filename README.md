@@ -27,9 +27,11 @@
   * MongoDB (Database)
   * Mongoose (ODM)
   * Json Web Token (Authorization purpose)
+  * Bcryptjs (For password hashing)
   * GoogleAPIs (For sending mails via gmail)
   * Nodemailer (Mail sender)
   * Razorpay (For Handling Payments)
+  * Multer (For file uploads)
  ## ENV Variables
  ### Create a .env file in root folder then add the following
  ```
@@ -44,4 +46,17 @@ GOOGLE_CLIENT_SECRET = *Google Client secret*
 GOOGLE_REDIRECT_URI = *Redirect URI*
 GOOGLE_REFRESH_TOKEN= *Refresh token*
 URL = *localhost address while on development | live address while on production*
+ ```
+ ## Installing dependencies and running the Project
+ ```
+ npm install
+ cd client
+ npm install
+ # Comeback in root folder of project
+ *Following command runs frontend on PORT 3000 and backend on PORT 5000*
+ npm run dev
+ *Following command runs frontend on PORT 3000*
+ npm run client
+ *Following command runs backend on PORT 5000*
+ npm run server
  ```
