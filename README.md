@@ -1,3 +1,3 @@
 # Gadgets360
-An online Ecommerce store built with MERN stack
-..........
+> Ecommerce Website built with MERN stack & Redux
+
