@@ -4,6 +4,8 @@
 ## Features
 * User Panel 
   * Authorization using JWT token
+  * Reset Password and Forget Password
+  * Advacnced filtering (filter using price,brands, ratings etc)
   * Checkout Process (shipping,payment method)
   * Payment Integration using Razorpay API
   * Review and Rating option
